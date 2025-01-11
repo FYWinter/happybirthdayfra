@@ -1,0 +1,299 @@
+@font-face {
+    font-family: "Handwritten";
+    src: url('fonts/Handwritten.ttf');
+}
+@font-face {
+    font-family: "Glass";
+    src: url('fonts/Glass.ttf');
+}
+
+
+:root {
+    --book-aspect-ratio: 1.33; /* 4:3 aspect ratio */
+    --book-edge-percentage: 0.42; /* edge to adjust positions */
+    --book-width: 50%;
+    --book-height: calc(var(--book-width) * var(--book-aspect-ratio));
+    --min-book-width: 600px;
+    --min-book-height: calc(var(--min-book-width) / var(--book-aspect-ratio));
+    --screen-diff-percentage: calc(var(--min-book-width) - 100vw);
+
+    --max-fra-width: 100px;
+
+    /* Glitch effect for text */
+    --glitch-speed: 4s;
+    --glitch-intensity: 2px;
+
+    /* Glitch effect for background */
+    --glitch-color1: rgba(255, 0, 0, 0.5);
+    --glitch-color2: rgba(0, 0, 255, 0.5);
+    --glitch-bg-speed: 1.75s;
+    --glitch-bg-intensity: 4px;
+}
+
+body {
+    font-family: "Handwritten", fallback, sans-serif;
+    font-size: 1.2em;
+    font-weight: 600;
+    overflow: hidden;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('images/wood.jpeg');
+}
+
+#book {
+    min-width: var(--min-book-width);
+    min-height: var(--min-book-height);
+    max-width: var(--book-width);
+    max-height: var(--book-height);
+    width: 100%;
+    height: 100%;
+    
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    position: relative;
+    display: flex;
+    justify-content: right;
+    align-items: top;
+}
+
+#bg-image {
+    box-shadow:
+        -0.3em 0.5em 1em rgb(0 0 0 / 60%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+
+@keyframes jump {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-75px); } /* Adjust the height as needed */
+    100% { transform: translateY(0); }
+}
+
+#fra-image.jumping {
+    animation: jump 0.5s ease-in-out; /* Adjust the duration as needed */
+}
+
+#fra-image {
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    width: var(--max-fra-width);
+    z-index: -1;
+}
+
+#bg-image img,
+#fra-image img {
+    width: 100%;
+    height: 100%;
+}
+
+#page-indicator {
+    font-size: 1.5em;
+    position: absolute;
+    text-align: end;
+    margin: 0.5em 0.5em;
+}
+
+#game-content {
+    display: flex;
+    justify-content: end;
+    width: calc(100% - (var(--book-edge-percentage) * 100%));
+}
+
+#choices {
+    width: 100%;
+    height: 100%;
+    margin: 5% 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+button {
+    font-family: "Handwritten", fallback, sans-serif;
+    font-size: 1.3em;
+    font-weight: 645;
+    background: none;
+    border: none;
+    margin: auto;
+    cursor: pointer;
+    color:rgba(0, 0, 0, 0.8);
+}
+
+button:hover {
+    color:rgba(35, 0, 89, 0.8);
+    text-shadow: 0 0 5px rgba(35, 0, 89, 0.8);
+}
+
+
+@keyframes glitch {
+    0% {
+        text-shadow: var(--glitch-intensity) var(--glitch-intensity) 0 red, calc(-1 * var(--glitch-intensity)) calc(-1 * var(--glitch-intensity)) 0 blue;
+        transform: translate(0);
+    }
+    20% {
+        text-shadow: calc(-1 * var(--glitch-intensity)) calc(-1 * var(--glitch-intensity)) 0 red, var(--glitch-intensity) var(--glitch-intensity) 0 blue;
+        transform: translate(calc(-1 * var(--glitch-intensity)), var(--glitch-intensity));
+    }
+    40% {
+        text-shadow: var(--glitch-intensity) calc(-1 * var(--glitch-intensity)) 0 red, calc(-1 * var(--glitch-intensity)) var(--glitch-intensity) 0 blue;
+        transform: translate(var(--glitch-intensity), calc(-1 * var(--glitch-intensity)));
+    }
+    60% {
+        text-shadow: calc(-1 * var(--glitch-intensity)) var(--glitch-intensity) 0 red, var(--glitch-intensity) calc(-1 * var(--glitch-intensity)) 0 blue;
+        transform: translate(calc(-1 * var(--glitch-intensity)), calc(-1 * var(--glitch-intensity)));
+    }
+    80% {
+        text-shadow: var(--glitch-intensity) var(--glitch-intensity) 0 red, calc(-1 * var(--glitch-intensity)) calc(-1 * var(--glitch-intensity)) 0 blue;
+        transform: translate(var(--glitch-intensity), var(--glitch-intensity));
+    }
+    100% {
+        text-shadow: calc(-1 * var(--glitch-intensity)) calc(-1 * var(--glitch-intensity)) 0 red, var(--glitch-intensity) var(--glitch-intensity) 0 blue;
+        transform: translate(0);
+    }
+}
+
+.glitched {
+    animation: glitch var(--glitch-speed) infinite;
+}
+
+
+
+@media (max-width: 630px) {
+    :root {
+        --screen-diff-percentage: calc(var(--min-book-width) - 100vw);
+    }
+
+    body {
+        justify-content: end;
+    }
+
+    #fra-image {
+        left: 25%;
+    }
+}
+
+
+
+
+
+
+
+
+
+#glitch_bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0); /* Very transparent */
+    z-index: -1; /* Ensure it is behind other content */
+    overflow: hidden;
+    pointer-events: none; /* Ensure it doesn't interfere with other elements */
+}
+
+@keyframes glitch-bg {
+    0% {
+        clip: rect(0, 100vw, 100px, 0);
+        transform: translate(0, 0);
+    }
+    10% {
+        clip: rect(50px, 100vw, 150px, 0);
+        transform: translate(0, 10px);
+    }
+    20% {
+        clip: rect(100px, 100vw, 200px, 0);
+        transform: translate(0, 20px);
+    }
+    30% {
+        clip: rect(150px, 100vw, 250px, 0);
+        transform: translate(0, 30px);
+    }
+    40% {
+        clip: rect(200px, 100vw, 300px, 0);
+        transform: translate(0, 40px);
+    }
+    50% {
+        clip: rect(250px, 100vw, 350px, 0);
+        transform: translate(0, 50px);
+    }
+    60% {
+        clip: rect(300px, 100vw, 400px, 0);
+        transform: translate(0, 60px);
+    }
+    70% {
+        clip: rect(350px, 100vw, 450px, 0);
+        transform: translate(0, 70px);
+    }
+    80% {
+        clip: rect(400px, 100vw, 500px, 0);
+        transform: translate(0, 80px);
+    }
+    90% {
+        clip: rect(450px, 100vw, 550px, 0);
+        transform: translate(0, 90px);
+    }
+    100% {
+        clip: rect(500px, 100vw, 600px, 0);
+        transform: translate(0, 100px);
+    }
+}
+
+#glitch_bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.0); /* Very transparent */
+}
+
+.glitch-square {
+    position: absolute;
+    background: black;
+    opacity: 0;
+    animation: glitch-square-animation 1s infinite;
+}
+
+@keyframes glitch-square-animation {
+    0% {
+        opacity: 0;
+        box-shadow: 0 0 0 var(--glitch-color1), 0 0 0 var(--glitch-color2);
+        transform: translate(0, 0);
+    }
+    20% {
+        opacity: 1;
+        box-shadow: var(--glitch-bg-intensity) var(--glitch-bg-intensity) 0 var(--glitch-color1), calc(-1 * var(--glitch-bg-intensity)) calc(-1 * var(--glitch-bg-intensity)) 0 var(--glitch-color2);
+        transform: translate(var(--glitch-bg-intensity), calc(-1 * var(--glitch-bg-intensity)));
+    }
+    40% {
+        opacity: 1;
+        box-shadow: calc(-1 * var(--glitch-bg-intensity)) calc(-1 * var(--glitch-bg-intensity)) 0 var(--glitch-color1), var(--glitch-bg-intensity) var(--glitch-bg-intensity) 0 var(--glitch-color2);
+        transform: translate(calc(-1 * var(--glitch-bg-intensity)), var(--glitch-bg-intensity));
+    }
+    60% {
+        opacity: 1;
+        box-shadow: var(--glitch-bg-intensity) calc(-1 * var(--glitch-bg-intensity)) 0 var(--glitch-color1), calc(-1 * var(--glitch-bg-intensity)) var(--glitch-bg-intensity) 0 var(--glitch-color2);
+        transform: translate(var(--glitch-bg-intensity), var(--glitch-bg-intensity));
+    }
+    80% {
+        opacity: 1;
+        box-shadow: calc(-1 * var(--glitch-bg-intensity)) var(--glitch-bg-intensity) 0 var(--glitch-color1), var(--glitch-bg-intensity) calc(-1 * var(--glitch-bg-intensity)) 0 var(--glitch-color2);
+        transform: translate(calc(-1 * var(--glitch-bg-intensity)), calc(-1 * var(--glitch-bg-intensity)));
+    }
+    100% {
+        opacity: 0;
+        box-shadow: 0 0 0 var(--glitch-color1), 0 0 0 var(--glitch-color2);
+        transform: translate(0, 0);
+    }
+}
