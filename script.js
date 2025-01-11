@@ -97,7 +97,7 @@ function generateChoices() {
     book.style.filter = `brightness(1)`; // Reset book brightness
     clearInterval(bg_glitch_interval); // Reset glitch squares
     choicesDiv.style.display = "block";
-    choicesDiv.innerHTML = "<p>HAPPY BIRTHDAY, FRA!! You made it, pookie!!<br/>Despite all the hardships! All the twist and turns! You really persevered and have grown into such an amazing woman💕 And despite those moments where everything feels dark or really scary just know that you are never alone! You are loved and seen and respected and missed and thought about and sought after and the star in our lives!!<br/>HAVE A GREAT DAY WE LOVE YOU YOU TINT FRENCH PERSON!!</p>";
+    choicesDiv.innerHTML = "<p>HAPPY BIRTHDAY, FRA!! You made it, pookie!!<br/>Despite all the hardships! All the twist and turns! You really persevered and have grown into such an amazing woman💕 And despite those moments where everything feels dark or really scary just know that you are never alone! You are loved and seen and respected and missed and thought about and sought after and the star in our lives!!<br/>HAVE A GREAT DAY WE LOVE YOU YOU TINY FRENCH PERSON!!</p>";
     indicatorText.innerHTML = "❤️/∞";
     // End message
 
