@@ -35,7 +35,8 @@ body {
     font-size: 1.2em;
     font-weight: 600;
     display: flex;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
     justify-content: start;
     align-items: center;
     height: 100vh;
@@ -174,7 +175,6 @@ button:hover {
 
     body {
         justify-content: end;
-        overflow: scroll;
     }
 
     #fra-image {
