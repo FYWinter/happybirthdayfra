@@ -35,10 +35,11 @@ body {
     font-size: 1.2em;
     font-weight: 600;
     display: flex;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-x: scroll;
+    overflow-y: hidden;
     justify-content: start;
     align-items: center;
+    width: 100vw;
     height: 100vh;
     margin: 0;
     background-image: url('images/wood.jpeg');
@@ -135,6 +136,17 @@ button:hover {
 }
 
 
+#choices p {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin: 1em;
+    margin-top: 2em;
+    padding: 0;
+    text-align: center;
+    width: 90%;
+}
+
+
 @keyframes glitch {
     0% {
         text-shadow: var(--glitch-intensity) var(--glitch-intensity) 0 red, calc(-1 * var(--glitch-intensity)) calc(-1 * var(--glitch-intensity)) 0 blue;
@@ -167,21 +179,17 @@ button:hover {
 }
 
 
-
+/*
 @media (max-width: 630px) {
-    :root {
-        --screen-diff-percentage: calc(var(--min-book-width) - 100vw);
-    }
-
     body {
         justify-content: end;
     }
 
     #fra-image {
-        left: 25%;
+        left: 15%;
     }
 }
-
+*/
 
 
 

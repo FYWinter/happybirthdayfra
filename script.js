@@ -3,7 +3,7 @@ var indicatorText = document.getElementById("page-indicator");
 var fraDiv = document.getElementById("fra-image");
 var book = document.getElementById("book");
 var page = 1;
-var max_pages = 3;
+var max_pages = 15;
 var glitch_level = 0;
 var glitch_speed = 4;
 
@@ -80,9 +80,29 @@ function randomWordsHTML() {
 }
 
 function generateChoices() {
-    var html = randomWordsHTML();
-    indicatorText.innerHTML = page + "/" + max_pages;
-    choicesDiv.innerHTML = html;
+    if (page <= max_pages)
+    {
+        var html = randomWordsHTML();
+        indicatorText.innerHTML = page + "/" + max_pages;
+        choicesDiv.innerHTML = html;
+        return;
+    }
+
+    // Undo glitch effects
+    glitch_level = 0;
+    glitch_speed = 4;
+    document.documentElement.style.setProperty('--glitch-intensity', '0px');
+    document.documentElement.style.setProperty('--glitch-speed', '4s');
+    document.getElementById('glitch_bg').style.backgroundColor = `rgba(55, 5, 5, 0)`; // Reset glitch-bg
+    book.style.filter = `brightness(1)`; // Reset book brightness
+    clearInterval(bg_glitch_interval); // Reset glitch squares
+    choicesDiv.style.display = "block";
+    choicesDiv.innerHTML = "<p>HAPPY BIRTHDAY, FRA!! You made it, pookie!!<br/>Despite all the hardships! All the twist and turns! You really persevered and have grown into such an amazing woman💕 And despite those moments where everything feels dark or really scary just know that you are never alone! You are loved and seen and respected and missed and thought about and sought after and the star in our lives!!<br/>HAVE A GREAT DAY WE LOVE YOU YOU TINT FRENCH PERSON!!</p>";
+    indicatorText.innerHTML = "❤️/∞";
+    // End message
+
+
+
 }
 
 function checkChoice(choice, correct, button_index) {
