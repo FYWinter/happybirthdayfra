@@ -8,10 +8,11 @@ var glitch_level = 0;
 var glitch_speed = 4;
 
 var bg_glitch_interval = setInterval(createGlitchSquare, 1000);
+var eyes_interval = setInterval(createGlitchEyes, 70);
 
 var specialPages = [
-    { name: "bright", state: 0, threshold: 3 }, // State: 0 = not used, 1 = currently active, 2 = used
-    { name: "small", state: 0, threshold: 6 }
+    { name: "bright", state: 0, threshold: 3, options: ["Bright"] }, // State: 0 = not used, 1 = currently active, 2 = used
+    { name: "small", state: 0, threshold: 6, options: ["Small", "Tiny", "Short"] }
 ];
 
 function randomWordsHTML() {
@@ -44,10 +45,24 @@ function randomWordsHTML() {
                     "Eyeliner",
                     "Nails",
                     "Furry",
-                    "Capricorn"];
+                    "Capricorn",
+                    "Unique",
+                    "Nerdy"];
 
 
     var right_words_remaining = 3;
+    var specialPage = -1;
+
+    // Special pages
+    for (var j = 0; j < specialPages.length; j++)
+    {
+        if ((glitch_level >= specialPages[j].threshold && specialPages[j].state == 0 && Math.random() < 0.2) || specialPages[j].state == 1) // 20% chance of special page
+        {
+            specialPage = j;
+            specialPages[j].state = 1;
+            break;
+        }
+    }
 
     var html = "";
     for (var i = 0; i < 10; i++)
@@ -68,6 +83,12 @@ function randomWordsHTML() {
             wrong_words.splice(rand_index, 1);
         }
 
+        if (specialPage != -1 && specialPages[specialPage].state == 1)
+        {
+            word = specialPages[specialPage].options[Math.floor(Math.random() * specialPages[specialPage].options.length)];
+            correct = true;
+        }
+
         if (page == max_pages) // Special page "loved"
         {
             word = "Loved";
@@ -80,6 +101,11 @@ function randomWordsHTML() {
 }
 
 function generateChoices() {
+    for (var j = 0; j < specialPages.length; j++)
+        if (specialPages[j].state == 1)
+            specialPages[j].state = 2;
+    
+
     if (page <= max_pages)
     {
         var html = randomWordsHTML();
@@ -98,11 +124,7 @@ function generateChoices() {
     clearInterval(bg_glitch_interval); // Reset glitch squares
     choicesDiv.style.display = "block";
     choicesDiv.innerHTML = "<p>HAPPY BIRTHDAY, FRA!! You made it, pookie!!<br/>Despite all the hardships! All the twist and turns! You really persevered and have grown into such an amazing woman💕 And despite those moments where everything feels dark or really scary just know that you are never alone! You are loved and seen and respected and missed and thought about and sought after and the star in our lives!!<br/>HAVE A GREAT DAY WE LOVE YOU YOU TINY FRENCH PERSON!!</p>";
-    indicatorText.innerHTML = "❤️/∞";
-    // End message
-
-
-
+    indicatorText.innerHTML = "♥/∞";
 }
 
 function checkChoice(choice, correct, button_index) {
@@ -134,10 +156,12 @@ function checkChoice(choice, correct, button_index) {
         // Slightly increase square creation speed
         clearInterval(bg_glitch_interval);
         bg_glitch_interval = setInterval(createGlitchSquare, 500 - glitch_level * 100);
+        
 
-        console.log(glitch_level + ", " + glitch_speed);
     }
 }
+
+
 
 
 function glitchText(text) {
@@ -166,7 +190,40 @@ function jumpToHeight() {
 
 
 
+function createGlitchEyes() {
+    if (glitch_level < 4)
+        return;
 
+    const character = document.getElementById('fra-image');
+    const eyes = document.createElement('div');
+
+    var left_top_base = 30; // Percentage from top
+    var left_left_base = 47; // Percentage from left
+    var right_top_base = 28; // Percentage from top
+    var right_left_base = 73; // Percentage from left
+
+    // Create black squares for eyes
+    const leftEye = document.createElement('div');
+    const rightEye = document.createElement('div');
+    leftEye.classList.add('glitch-eye');
+    leftEye.style.top = `${left_top_base + Math.random() * 4}%`;
+    leftEye.style.left = `${left_left_base + Math.random() * 4}%`;
+
+    rightEye.classList.add('glitch-eye');
+    rightEye.style.top = `${right_top_base + Math.random() * 4}%`;
+    rightEye.style.left = `${right_left_base + Math.random() * 4}%`;
+
+    eyes.appendChild(leftEye);
+    eyes.appendChild(rightEye);
+
+    character.appendChild(eyes);
+
+    // Remove the square after the animation is complete
+    setTimeout(() => {
+        character.removeChild(eyes);
+    }
+    , 100);
+}
 
 function createGlitchSquare() {
     if (glitch_level < 2)
